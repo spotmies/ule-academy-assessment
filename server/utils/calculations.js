@@ -17,7 +17,7 @@ export const calculateAssessmentResults = (questionsDB, submissionData) => {
     const olqScores = [];
 
     olqQuestions.forEach(q => {
-        const rawVal = submissionData.olq[q.qId] ? parseInt(submissionData.olq[q.qId], 10) : 3;
+        const rawVal = submissionData.olq[q.qId] ? parseInt(submissionData.olq[q.qId], 10) : 1;
 
         const val = Math.max(1, Math.min(5, rawVal));
 

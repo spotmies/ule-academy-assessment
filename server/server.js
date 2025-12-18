@@ -16,29 +16,28 @@ connectDB();
 
 const app = express();
 
-// --- 1. Security Headers & CORS (Best to run these first) ---
+// Security Headers & CORS
 app.use(helmet());
 app.use(cors());
 
-// --- 2. Parsers (CRITICAL: These MUST run before mongoSanitize) ---
+// Parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Add this line
 
-// --- 3. Data Sanitization ---
-// Now that data is parsed, we can clean it
+// Data Sanitization
 // app.use(mongoSanitize());
 // app.use(xss());
 app.use(hpp());
 
-// --- 4. Logging ---
+// Logging
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// --- 5. Routes ---
+// Routes
 app.use('/api/assessment', assessmentRoutes);
 
-// --- 6. Error Handling ---
+// Error Handling
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
