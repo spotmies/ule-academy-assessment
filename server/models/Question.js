@@ -1,35 +1,22 @@
 import mongoose from 'mongoose';
 
-const questionSchema = mongoose.Schema({
-  section: {
-    type: String,
-    required: true,
-    enum: ['A', 'B'] 
-  },
-  qId: {
-    type: Number,
-    required: true
-  },
-  text: {
-    type: String,
-    required: true
-  },
-  options: [{
-    label: String, 
-    value: String 
-  }],
-  correctOption: {
-    type: String,
-    select: false 
-  },
-  factor: {
-    type: String, 
-    enum: ['I', 'II', 'III', 'IV', null]
-  },
-  olqName: {
-    type: String 
-  }
+const optionSchema = new mongoose.Schema(
+  { label: String, value: String },
+  { _id: false }
+);
+
+const questionSchema = new mongoose.Schema({
+  section: { type: String, enum: ['A', 'B'], required: true },
+  qId: { type: Number, required: true },
+  text: { type: String, required: true },
+
+  // Aptitude
+  options: [optionSchema],
+  correctOption: { type: String, select: false },
+
+  // OLQ
+  olqName: String,
+  factor: { type: String, enum: ['I', 'II', 'III', 'IV'] }
 });
 
-const Question = mongoose.model('Question', questionSchema);
-export default Question;
+export default mongoose.model('Question', questionSchema);

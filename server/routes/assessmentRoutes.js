@@ -1,5 +1,9 @@
 import express from 'express';
-import { getQuestions, submitAssessment, verifyCoachPin } from '../controllers/assessmentController.js';
+import {
+    getQuestions,
+    submitAssessment,
+    verifyCoachPin
+} from '../controllers/assessmentController.js';
 
 const router = express.Router();
 

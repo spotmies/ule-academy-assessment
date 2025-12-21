@@ -1,29 +1,13 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 import Question from './models/Question.js';
 import { questions } from './data/seedData.js';
-import connectDB from './config/db.js';
 
 dotenv.config();
-connectDB();
+await connectDB();
 
-const importData = async () => {
-  try {
-    await Question.deleteMany();
+await Question.deleteMany();
+await Question.insertMany(questions);
 
-    const formattedQuestions = questions.map(q => ({
-      ...q,
-      olqName: q.name 
-    }));
-
-    await Question.insertMany(formattedQuestions);
-
-    console.log('Data Imported Successfully!');
-    process.exit();
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
-};
-
-importData();
+console.log('Database seeded');
+process.exit();
